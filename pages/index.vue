@@ -2,15 +2,13 @@
   <IonPage>
     <ion-header>
       <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-back-button></ion-back-button>
-        </ion-buttons>
         <ion-title>Header Toolbar</ion-title>
       </ion-toolbar>
     </ion-header>
     <IonContent class="ion-padding">
       <IonButton> button</IonButton>
       <IonButton router-link="about"> About</IonButton>
+      <button class="ml-2 rounded bg-cyan-700 hover:bg-cyan-500 text-white px-4 py-4  w-ful font-bold" @click="$event => router.push('/tailwindcss')">Tailwind CSS Page</button>
       <ion-card>
         <ion-card-header>
           <ion-card-title>Card Title</ion-card-title>
@@ -26,13 +24,7 @@
   </IonPage>
 </template>
 
-<script lang="ts">
-// import {
-//   IonCard,
-//   IonCardContent,
-//   IonCardHeader,
-//   IonCardSubtitle,
-//   IonCardTitle,
-// } from "@ionic/vue";
+<script setup lang="ts">
+const router = useRouter()
 </script>
 <style scoped></style>
