@@ -1,14 +1,20 @@
 <template>
-  <IonPage>
+  <ion-page>
     <ion-header>
       <ion-toolbar>
         <ion-title>Header Toolbar</ion-title>
       </ion-toolbar>
     </ion-header>
-    <IonContent class="ion-padding">
-      <IonButton> button</IonButton>
-      <IonButton router-link="about"> About</IonButton>
-      <button class="ml-2 rounded bg-cyan-700 hover:bg-cyan-500 text-white px-4 py-4  w-ful font-bold" @click="$event => router.push('/tailwindcss')">Tailwind CSS Page</button>
+    <ion-content class="ion-padding">
+      <ion-button @click="onLogout"> Logout</ion-button>
+      <ion-button v-if="!auth" router-link="login"> Login</ion-button>
+      <ion-button router-link="about"> About</ion-button>
+      <!-- <button
+        class="ml-2 rounded bg-cyan-700 hover:bg-cyan-500 text-white px-4 py-4 w-ful font-bold"
+        @click="($event) => router.push('/tailwindcss')"
+      >
+        Tailwind CSS Page
+      </button> -->
       <ion-card>
         <ion-card-header>
           <ion-card-title>Card Title</ion-card-title>
@@ -16,15 +22,23 @@
         </ion-card-header>
 
         <ion-card-content>
-          Here's a small text description for the card content. Nothing more,
-          nothing less.
+          {{ auth }}
         </ion-card-content>
       </ion-card>
-    </IonContent>
-  </IonPage>
+    </ion-content>
+  </ion-page>
 </template>
 
 <script setup lang="ts">
-const router = useRouter()
+const auth = useFirebaseAuth()?.currentUser;
+const router = useRouter();
+definePageMeta({
+  middleware: ["auth"],
+});
+
+const onLogout = async () => {
+  await useFirebaseAuth()?.signOut();
+  router.replace("/login");
+};
 </script>
 <style scoped></style>
